@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   eventTitle: "",
   eventDetails: "",
-  endDate: "",
   events: [],
 };
 
@@ -11,6 +10,9 @@ const eventSlice = createSlice({
   name: "event",
   initialState,
   reducers: {
+    setEventTitle: (state, action) => {
+      state.eventTitle = action.payload;
+    },
     setEventDetails: (state, action) => {
       state.eventDetails = action.payload;
     },
@@ -19,5 +21,6 @@ const eventSlice = createSlice({
   },
 });
 
-export const { setEventDetails, eventClear } = eventSlice.actions;
+export const { setEventTitle, setEventDetails, eventClear } =
+  eventSlice.actions;
 export default eventSlice.reducer;

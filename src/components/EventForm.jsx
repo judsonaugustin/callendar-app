@@ -1,30 +1,35 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { eventClear, setEventDetails } from "../features/eventSlice";
+import {
+  eventClear,
+  setEventDetails,
+  setEventTitle,
+} from "../features/eventSlice";
 import { rrulestr } from "rrule";
 import RRuleGenerator from "react-rrule-generator";
 
-const EventForm = ({ calendarRef }) => {
+const EventForm = (props) => {
   const dispatch = useDispatch();
-  const { eventDetails } = useSelector((state) => state.event);
+  const { eventTitle, eventDetails } = useSelector((state) => state.event);
 
   const handleSubmit = () => {
-    const calendarApi = calendarRef.current.getApi();
+    const calendarApi = props.calendarRef.current.getApi();
 
     const rruleString = eventDetails;
     console.log(rruleString);
     const rruleData = rrulestr(rruleString);
     const newEvent = {
+      title: eventTitle,
       rrule: {
         ...rruleData.options,
       },
     };
 
     calendarApi.addEvent(newEvent);
-    dispatch(eventSubmit(newEvent)); // Dispatch the eventSubmit action to update the events array
+    // dispatch(addEvent(newEvent)); // Dispatch the eventSubmit action to update the events array
   };
   const handleClearEvents = () => {
-    const calendarApi = calendarRef.current.getApi();
+    const calendarApi = props.calendarRef.current.getApi();
 
     // Clear existing events
     calendarApi.removeAllEvents();
@@ -32,6 +37,16 @@ const EventForm = ({ calendarRef }) => {
   };
   return (
     <div>
+      <div className="flex">
+        {/* <label htmlFor="eventTitle">Event Name</label> */}
+        <input
+          type="text"
+          value={eventTitle}
+          className="ml-12 py-2 pl-4 pr-10 rounded-lg ml-64 mt-4"
+          placeholder="Event Name"
+          onChange={(e) => dispatch(setEventTitle(e.target.value))}
+        />
+      </div>
       <RRuleGenerator
         onChange={(rrule) => dispatch(setEventDetails(rrule))}
         config={{

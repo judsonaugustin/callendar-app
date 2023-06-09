@@ -25,7 +25,7 @@ const CalendarApp = () => {
           <h3 className="text-3xl font-semibold text-center mt-4">
             Add Events
           </h3>
-          <div className="">
+          <div className="mt-2">
             <EventForm calendarRef={calendarRef} />
           </div>
           <div>
