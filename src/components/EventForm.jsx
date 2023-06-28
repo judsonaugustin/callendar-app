@@ -17,7 +17,7 @@ const EventForm = (props) => {
 
   const handleSubmit = () => {
     if (!eventTitle) {
-      dispatch(setError({ title: "please provide a valid event" }));
+      dispatch(setError({ title: "Please provide a valid event" }));
       return;
     }
 
@@ -69,7 +69,9 @@ const EventForm = (props) => {
           placeholder="Event Name"
           onChange={(e) => handleTitle(e.target.value)}
         />
-        <p className="text-red-500 ml-2">{error.title}</p>
+        <p className="text-red-500 ml-2 py-2 font-semibold mt-4">
+          {error.title}
+        </p>
       </div>
       <RRuleGenerator
         onChange={(rrule) => dispatch(setEventDetails(rrule))}
