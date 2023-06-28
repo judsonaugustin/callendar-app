@@ -1,9 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
-const EventList = () => {
-  const { events } = useSelector((state) => state.event);
-
+const EventList = ({ events }) => {
   return (
     <div className="mx-4 mt-8">
       <h3 className="text-3xl font-semibold text-center mt-4 mb-4">Events</h3>

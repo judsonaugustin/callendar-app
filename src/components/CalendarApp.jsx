@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -7,16 +7,20 @@ import interactionPlugin from "@fullcalendar/interaction";
 import EventForm from "./EventForm";
 
 import rrulePlugin from "@fullcalendar/rrule";
+import EventList from "./EventList";
 
 const CalendarApp = () => {
   const calendarRef = useRef(null);
   const { events } = useSelector((state) => state.event);
 
   useEffect(() => {
+    // Obtain the FullCalendar API from the calendarRef
     const calendarApi = calendarRef.current.getApi();
+    // Remove all existing events from the calendar
     calendarApi.removeAllEvents();
+    // Add the updated events from the Redux store to the calendar
     calendarApi.addEventSource(events);
-  }, [events]);
+  }, [events]); // Run this effect whenever the 'events' array changes
 
   return (
     <div className="relative bg-gradient-to-r from-[#B0F3F1] to-[#FFCFDF]">
@@ -28,6 +32,9 @@ const CalendarApp = () => {
           <div className="mt-2">
             <EventForm calendarRef={calendarRef} />
           </div>
+          {/* <div>
+            <EventList events={events} />
+          </div> */}
         </div>
         <div className="w-full flex">
           <div className=" bg-white mt-auto mb-4 w-full py-4 px-4 border-t-8 border-yellow-200 rounded-3xl">
